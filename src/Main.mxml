@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" xmlns:component="component.*"
+			   creationComplete="onCreationComplete(event)">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import component.TradePanel;
+			
+			import model.TradeData;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			
+			public var tradeDataList:ArrayCollection = new ArrayCollection();
+			
+			protected function onCreationComplete(event:FlexEvent):void
+			{
+				var tradeData:TradeData = new TradeData();
+				tradeData.pair = "USD CHF";
+				tradeData.buy = "0.99143";
+				tradeData.sell = "0.99043";
+				tradeDataList.addItem(tradeData);
+				
+				var tradeData1:TradeData = new TradeData();
+				tradeData1.pair = "GBP USD";
+				tradeData1.buy = "1.28495";
+				tradeData1.sell = "1.2836";
+				tradeDataList.addItem(tradeData1);
+				
+				var tradeData2:TradeData = new TradeData();
+				tradeData2.pair = "GBP CHF";
+				tradeData2.buy = "1.27378";
+				tradeData2.sell = "1.27147";
+				tradeDataList.addItem(tradeData2);
+				
+				var tradeData3:TradeData = new TradeData();
+				tradeData3.pair = "EUR SEK";
+				tradeData3.buy = "9.632";
+				tradeData3.sell = "9.6055";
+				tradeDataList.addItem(tradeData3);
+				
+				var tradeData4:TradeData = new TradeData();
+				tradeData4.pair = "USD JPY";
+				tradeData4.buy = "110.467";
+				tradeData4.sell = "110.417";
+				tradeDataList.addItem(tradeData4);
+				
+				var tradeData5:TradeData = new TradeData();
+				tradeData5.pair = "EUR JPY";
+				tradeData5.buy = "120.589";
+				tradeData5.sell = "120.491";
+				tradeDataList.addItem(tradeData5);
+				
+				var timerUp:Timer = new Timer(1000);
+				timerUp.addEventListener(TimerEvent.TIMER, onTimerUp);
+				timerUp.start();
+				
+				var timerDown:Timer = new Timer(1000);
+				timerDown.addEventListener(TimerEvent.TIMER, onTimerDown);
+				
+				
+				function onTimerUp(event:TimerEvent):void 
+				{
+					timerUp.stop();
+					timerDown.start();
+					
+					var randomNumber:Number = Math.random() * tradeDataList.length;
+					var tData:TradeData = tradeDataList.getItemAt(randomNumber-1) as TradeData; 
+					var val:Number = Number(tData.buy) + (Number(tData.buy) * 10 / 100);
+					tData.buy = val.toString();
+					tData.isGreen = true;
+					
+					tradeDataList.refresh();
+				}
+				
+				function onTimerDown(event:TimerEvent):void 
+				{
+					timerDown.stop();
+					timerUp.start();
+					
+					var randomNumber:Number = Math.random() * tradeDataList.length;
+					var tData:TradeData = tradeDataList.getItemAt(randomNumber-1) as TradeData; 
+					var val:Number = Number(tData.buy) - (Number(tData.buy) * 10 / 100);
+					tData.buy = val.toString();
+					tData.isGreen = false;
+					
+					tradeDataList.refresh();
+				}
+				
+				
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:SkinnableDataContainer id="tradeComp" itemRenderer="component.TradePanel" dataProvider="{tradeDataList}" width="70%" left="10">
+		<s:layout>
+			<s:TileLayout paddingTop="10" />
+		</s:layout>
+	</s:SkinnableDataContainer>
+	
+	
+</s:Application>

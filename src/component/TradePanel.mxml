@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:component="component.*">
+	
+	
+	<fx:Script>
+		<![CDATA[
+			protected function onMouseOverHandler(event:MouseEvent):void
+			{
+				if(event.currentTarget.id == "redDownTrade"){
+					redDownTrade.setStyle("backgroundColor","#ff0000");
+					redDownTrade.setStyle("color","#ffffff");
+					redDownTrade.setStyle("borderColor","#0000ff");
+				 } else {
+					 greenUpTradeVG.setStyle("backgroundColor","#00ff00");
+					 greenUpTradeVG.setStyle("color","#ffffff");
+					 greenUpTradeVG.setStyle("borderColor","#0000ff");
+				} 
+			}
+			
+			protected function onMouseOutHandler(event:MouseEvent):void
+			{
+				if(event.currentTarget.id == "redDownTrade"){
+					redDownTrade.setStyle("backgroundColor","#ffffff");
+					redDownTrade.setStyle("color","#ff0000");
+					redDownTrade.setStyle("borderColor","#000000");
+				} else {
+					greenUpTradeVG.setStyle("backgroundColor","#ffffff");
+					greenUpTradeVG.setStyle("color","#00ff00");
+					greenUpTradeVG.setStyle("borderColor","#000000");
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:Panel id="tradPanel" title="{data.pair}" height="100" backgroundColor="#e6e6e6" skinClass="skin.CustomPanel">
+		
+	<s:HGroup gap="10" top="10" left="10" right="10" bottom="10">
+		<s:BorderContainer id="redDownTrade" width="90" color="#ff0000" buttonMode="true" mouseOver="onMouseOverHandler(event)" mouseOut="onMouseOutHandler(event)"
+				backgroundColor="#ffffff" x="10" >
+			<s:layout>
+				<s:VerticalLayout gap="0" paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5" />
+			</s:layout>
+			<s:Label id="redHeader" text="Sell USD" fontSize="10"  />
+			<s:HGroup  gap="1">
+				<s:HGroup verticalAlign="bottom" gap="1" alignmentBaseline="descent">
+					<s:Label id="redLblTotal" text="{data.getSellFirst()}" fontSize="15"  />
+					<s:Label id="redLbl" text="{data.getSellSecond()}" fontSize="25"  />
+				</s:HGroup>
+				<s:Label id="redLblTop" text="{data.getSellThird()}" fontSize="15" verticalAlign="top"  />
+			</s:HGroup>
+		</s:BorderContainer>
+		
+		<s:Group>
+			<s:Image id="greenShape" source="assets/up.png" visible="{data.isGreen}"  />
+			<s:Image id="redShape" source="assets/down.png" visible="{!data.isGreen}" />
+		</s:Group>
+		
+		<s:BorderContainer id="greenUpTradeVG" width="90" color="#00FF00" buttonMode="true" mouseOver="onMouseOverHandler(event)" mouseOut="onMouseOutHandler(event)">
+			<s:layout>
+				<s:VerticalLayout gap="0" paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5" />
+			</s:layout>
+			<s:Label id="greenHeader" text="Buy USD" fontSize="10" />
+			<s:HGroup gap="1">
+				<s:HGroup verticalAlign="bottom" gap="1" alignmentBaseline="descent">
+					<s:Label id="greenLblTotal" text="{data.getBuyFirst()}" fontSize="15" />
+					<s:Label id="greenLbl" text="{data.getBuySecond()}" fontSize="25" />
+				</s:HGroup>
+				<s:Label id="greenLblTop" text="{data.getBuyThird()}" fontSize="15"  />
+			</s:HGroup>
+		</s:BorderContainer>
+	</s:HGroup>
+		
+	</s:Panel>
+</s:ItemRenderer>
