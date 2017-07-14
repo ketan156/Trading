@@ -6,6 +6,13 @@
 	
 	<fx:Script>
 		<![CDATA[
+			
+			[Embed(source="/assets/up.png")]
+			public static const upIcon:Class;
+			
+			[Embed(source="/assets/down.png")]
+			public static const downIcon:Class;
+			
 			protected function onMouseOverHandler(event:MouseEvent):void
 			{
 				if(event.currentTarget.id == "redDownTrade"){
@@ -54,8 +61,8 @@
 		</s:BorderContainer>
 		
 		<s:Group>
-			<s:Image id="greenShape" source="assets/up.png" visible="{data.isGreen}"  />
-			<s:Image id="redShape" source="assets/down.png" visible="{!data.isGreen}" />
+			<s:Image id="greenShape" source="{upIcon}" visible="{data.isGreen}"  />
+			<s:Image id="redShape" source="{downIcon}" visible="{!data.isGreen}" />
 		</s:Group>
 		
 		<s:BorderContainer id="greenUpTradeVG" width="90" color="#00FF00" buttonMode="true" mouseOver="onMouseOverHandler(event)" mouseOut="onMouseOutHandler(event)">
